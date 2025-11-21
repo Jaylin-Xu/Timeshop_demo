@@ -1,0 +1,681 @@
+/* =========================================
+   Global layout & background
+   全局布局与背景：纸纹图 + 浅色半透明容器
+   ========================================= */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+    sans-serif;
+}
+
+body {
+  min-height: 100vh;
+  background: #e5e7eb url("./background.jpg") center center / cover fixed
+    no-repeat;
+}
+
+.page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.app {
+  width: 100%;
+  max-width: 1120px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 24px;
+  border: 1px solid rgba(148, 163, 184, 0.7);
+  padding: 20px 24px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  color: #0f172a;
+  backdrop-filter: blur(12px);
+}
+
+/* =========================================
+   Auth overlay
+   登录遮罩层
+   ========================================= */
+
+.auth-overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(15, 23, 42, 0.4);
+  z-index: 1000;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 360px;
+  background: rgba(249, 250, 251, 0.98);
+  border-radius: 20px;
+  border: 1px solid rgba(209, 213, 219, 0.9);
+  padding: 20px 18px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.auth-card h1 {
+  margin: 0;
+  font-size: 1.4rem;
+  letter-spacing: 0.04em;
+}
+
+.auth-subtitle {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #6b7280;
+}
+
+.auth-input-row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 6px;
+}
+
+.auth-input-row label {
+  font-size: 0.8rem;
+  color: #4b5563;
+}
+
+.auth-input-row input {
+  padding: 6px 8px;
+  border-radius: 10px;
+  border: 1px solid rgba(209, 213, 219, 0.9);
+  font-size: 0.9rem;
+  outline: none;
+}
+
+.auth-input-row input:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 1px rgba(59, 130, 246, 0.3);
+}
+
+.auth-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.auth-message {
+  min-height: 18px;
+  margin-top: 4px;
+  font-size: 0.8rem;
+  color: #ef4444;
+}
+
+/* =========================================
+   Header
+   ========================================= */
+
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.header-left {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.brand {
+  font-size: 1.3rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.subtitle {
+  font-size: 0.9rem;
+  color: #6b7280;
+}
+
+.timer-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: flex-end;
+}
+
+.timer-row {
+  display: flex;
+  gap: 10px;
+}
+
+.timer-item {
+  text-align: right;
+  padding: 6px 10px;
+  border-radius: 10px;
+  background: rgba(249, 250, 251, 0.95);
+  border: 1px solid rgba(148, 163, 184, 0.9);
+}
+
+.timer-label {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #6b7280;
+}
+
+.timer-value {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    "Liberation Mono", "Courier New", monospace;
+  font-size: 0.95rem;
+}
+
+/* =========================================
+   Main layout
+   ========================================= */
+
+main {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: 12px;
+}
+
+.row-bottom {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.col-left {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  height: 100%;
+}
+
+/* =========================================
+   Card shell
+   ========================================= */
+
+.card {
+  background: rgba(249, 250, 251, 0.96);
+  border-radius: 18px;
+  border: 1px solid rgba(209, 213, 219, 0.9);
+  padding: 14px 14px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.card h2 {
+  margin: 0;
+  font-size: 1rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.section-desc {
+  margin: 0;
+  font-size: 0.88rem;
+  color: #6b7280;
+}
+
+.section-tag {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  border-radius: 999px;
+  padding: 4px 10px;
+  border: 1px solid rgba(148, 163, 184, 0.9);
+  color: #2563eb;
+  background: rgba(239, 246, 255, 0.9);
+}
+
+.section-tag.soft {
+  color: #6b7280;
+  background: rgba(243, 244, 246, 0.9);
+}
+
+.card-player {
+  padding-top: 10px;
+  padding-bottom: 8px;
+}
+
+/* =========================================
+   Player section
+   ========================================= */
+
+.player-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.stat-pill {
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(209, 213, 219, 0.9);
+  background: #ffffff;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.84rem;
+}
+
+.stat-pill-coins {
+  border-color: #38bdf8;
+}
+
+.stat-label {
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: 0.7rem;
+  color: #6b7280;
+}
+
+.stat-value {
+  font-weight: 600;
+}
+
+.fine {
+  margin: 2px 0 0;
+  font-size: 0.8rem;
+  color: #6b7280;
+}
+
+/* =========================================
+   Online Lounge
+   ========================================= */
+
+.card-social {
+  flex: 1 1 auto;
+}
+
+.toggle-inline {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.75rem;
+  color: #6b7280;
+}
+
+.toggle-inline input[type='checkbox'] {
+  width: 14px;
+  height: 14px;
+}
+
+.online-users-list {
+  margin-top: 6px;
+  max-height: 210px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-right: 4px;
+}
+
+.online-user {
+  padding: 6px 8px;
+  border-radius: 12px;
+  border: 1px solid rgba(209, 213, 219, 0.9);
+  background: #ffffff;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 0.8rem;
+}
+
+.online-user.self {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 1px rgba(59, 130, 246, 0.25);
+}
+
+.online-user-main {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 6px;
+}
+
+.online-user-name {
+  font-weight: 600;
+}
+
+.online-user-coins {
+  font-size: 0.78rem;
+  color: #6b7280;
+}
+
+.online-user-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.online-card-pill {
+  padding: 2px 6px;
+  border-radius: 999px;
+  border: 1px solid rgba(209, 213, 219, 0.9);
+  background: #f9fafb;
+  font-size: 0.7rem;
+}
+
+.online-user-empty {
+  font-size: 0.78rem;
+  color: #9ca3af;
+}
+
+/* =========================================
+   Lottery & flip
+   ========================================= */
+
+.rarity-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.rarity-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.76rem;
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: #ffffff;
+  border: 1px solid rgba(209, 213, 219, 0.9);
+}
+
+.badge {
+  width: 20px;
+  height: 20px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.72rem;
+  font-weight: 600;
+  background: #e5e7eb;
+  color: #111827;
+}
+
+.badge-S { background: #fb923c; }
+.badge-A { background: #a855f7; }
+.badge-B { background: #facc15; }
+.badge-C { background: #4ade80; }
+.badge-D { background: #b9f4b7; }
+.badge-E { background: #93c5fd; }
+.badge-F { background: #bbf9f4; }
+.badge-none {
+  background: #111827;
+  color: #f9fafb;
+}
+
+.flip-zone {
+  display: flex;
+  justify-content: center;
+  padding: 8px 0 4px;
+}
+
+.flip {
+  width: 190px;
+  height: 260px;
+  perspective: 900px;
+}
+
+.flip-inner {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.6s ease;
+}
+
+.flip-face {
+  position: absolute;
+  inset: 0;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid rgba(209, 213, 219, 0.9);
+  backface-visibility: hidden;
+  background: #f3f4f6;
+}
+
+.flip-face img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.flip-back {
+  transform: rotateY(180deg);
+}
+
+.flip.flipped .flip-inner {
+  transform: rotateY(180deg);
+}
+
+/* =========================================
+   Buttons
+   ========================================= */
+
+.actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+.btn {
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  font-size: 0.86rem;
+  font-weight: 500;
+  border: 1px solid transparent;
+  cursor: pointer;
+  outline: none;
+  background: #e5e7eb;
+  color: #111827;
+  transition: background 0.15s ease, transform 0.1s ease,
+    box-shadow 0.15s ease, opacity 0.1s ease;
+}
+
+/* 让主按钮里的副标题文字变成浅白色 */
+.btn.primary .btn-sub {
+  color: rgba(249, 250, 251, 0.9);
+}
+
+.btn.primary {
+  background: #3b82f6;
+  border-color: #2563eb;
+  color: #f9fafb;
+}
+
+.btn.primary:hover:not(:disabled) {
+  background: #2563eb;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 14px rgba(37, 99, 235, 0.4);
+}
+
+.btn.danger {
+  background: #ef4444;
+  border-color: #b91c1c;
+  color: #fef2f2;
+}
+
+.btn.danger:hover:not(:disabled) {
+  background: #dc2626;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 14px rgba(220, 38, 38, 0.35);
+}
+
+.btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+}
+
+.coin-claim-btn {
+  padding: 6px 12px;
+  font-size: 0.78rem;
+  white-space: nowrap;
+  background: #facc15;
+  border-color: #eab308;
+  color: #713f12;
+}
+
+.coin-claim-visible {
+  animation: coin-pulse 0.3s ease-out;
+}
+
+.coin-claim-clicked {
+  transform: scale(0.9);
+}
+
+@keyframes coin-pulse {
+  0%   { transform: scale(0.8); opacity: 0; }
+  100% { transform: scale(1);   opacity: 1; }
+}
+
+/* =========================================
+   Inventory & log
+   ========================================= */
+
+.grid.inventory {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.inv-item {
+  border-radius: 12px;
+  border: 1px solid rgba(209, 213, 219, 0.9);
+  background: #ffffff;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.inv-item img {
+  width: 100%;
+  height: 80px;
+  object-fit: cover;
+}
+
+.inv-item .label {
+  padding: 4px 6px 6px;
+  font-size: 0.75rem;
+  text-align: center;
+}
+
+.log {
+  margin-top: 6px;
+  max-height: 210px;
+  overflow-y: auto;
+  padding-right: 4px;
+  font-size: 0.78rem;
+  color: #111827;
+}
+
+.log div {
+  padding: 3px 0;
+  border-bottom: 1px dashed rgba(209, 213, 219, 0.9);
+}
+
+/* =========================================
+   Footer & scrollbar
+   ========================================= */
+
+.app-footer {
+  margin-top: 2px;
+  font-size: 0.78rem;
+  color: #6b7280;
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.log::-webkit-scrollbar,
+.online-users-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.log::-webkit-scrollbar-thumb,
+.online-users-list::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.9);
+  border-radius: 999px;
+}
+
+/* =========================================
+   Responsive
+   ========================================= */
+
+@media (max-width: 900px) {
+  .app {
+    padding: 16px 14px 14px;
+    border-radius: 18px;
+  }
+
+  .app-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .timer-panel {
+    align-items: flex-start;
+  }
+
+  .row,
+  .row-bottom {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .col-left {
+    height: auto;
+  }
+
+  .card {
+    padding: 12px 10px 10px;
+  }
+
+  .flip {
+    width: 170px;
+    height: 240px;
+  }
+}

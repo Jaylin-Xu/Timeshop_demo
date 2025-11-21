@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- 浏览器 tab 上的 emoji favicon：⌛️ -->
+  <link
+    rel="icon"
+    href="data:image/svg+xml,
+    <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'>
+      <text y='0.9em' font-size='90'>⌛️</text>
+    </svg>"
+  />
+
+  <title>Time Shop · 时间商店</title>
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <div class="page">
+    <div class="app">
+      <!-- ========= 登录 / 注册遮罩（帐号入口） ========= -->
+      <div id="authOverlay" class="auth-overlay">
+        <div class="auth-card">
+          <h1>Time Shop · 时间商店</h1>
+          <p class="auth-subtitle">
+            The resources will be linked to this account.<br />
+            时间、硬币和卡牌会绑定在此账号上。
+          </p>
+
+          <div class="auth-input-row">
+            <label for="authUsername">Username 用户名</label>
+            <input id="authUsername" type="text" autocomplete="username" />
+          </div>
+
+          <div class="auth-input-row">
+            <label for="authPassword">Password 密码</label>
+            <input id="authPassword" type="password" autocomplete="current-password" />
+          </div>
+
+          <div class="auth-actions">
+            <button id="signupBtn" class="btn primary">Sign up 注册</button>
+            <button id="loginBtn" class="btn">Log in 登录</button>
+          </div>
+
+          <div id="authMessage" class="auth-message"></div>
+        </div>
+      </div>
+      <!-- ========= 登录遮罩结束 ========= -->
+
+      <!-- 顶部标题 + 计时信息 -->
+      <header class="app-header">
+        <div class="header-left">
+          <div class="brand">⌛️ Time Shop · 时间商店</div>
+          <div class="subtitle">
+            Each account starts with 2 base coins; time will only continue to accumulate while the account remains in the current window.<br />
+            每个账号起初拥有 2 枚基础硬币；只有停留在本窗口内时，时间才会继续累积。
+          </div>
+        </div>
+
+        <div class="timer-panel">
+          <!-- 全站总时长 -->
+          <div class="timer-row">
+            <div class="timer-item">
+              <div class="timer-label">Total Time (all users) / 所有用户总时长</div>
+              <div class="timer-value" id="timerDisplay">00:00:00</div>
+            </div>
+          </div>
+          <!-- 当前账号在本页面的时长 + 账号名 -->
+          <div class="timer-row">
+            <div class="timer-item">
+              <div class="timer-label">You on this page / 你在此页面的时间</div>
+              <div class="timer-value" id="sessionTimer">00:00:00</div>
+            </div>
+            <div class="timer-item">
+              <div class="timer-label">User (account) / 当前账号</div>
+              <div class="timer-value" id="usernameLabel">—</div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <main>
+        <!-- 上排：左列 = Player + Online User；右列 = Lottery -->
+        <div class="row row-top">
+          <div class="col-left">
+            <!-- Player：个人信息 -->
+            <section class="card card-player">
+              <h2>Player / 玩家</h2>
+
+              <!-- 描述文字已按要求删除，仅保留统计与按钮 -->
+              <div class="player-stats">
+                <div class="stat-pill">
+                  <span class="stat-label">User / 用户</span>
+                  <span class="stat-value" id="usernameLabel-side">—</span>
+                </div>
+
+                <div class="stat-pill stat-pill-coins">
+                  <span class="stat-label">Coins / 硬币</span>
+                  <span class="stat-value" id="coinLabel">0</span>
+                </div>
+
+                <!-- 每 120 秒出现一次，3 秒内可点击领取 +1 coin 的按钮 -->
+                <button
+                  id="coinSpawnBtn"
+                  class="btn coin-claim-btn"
+                  style="display: none;"
+                >
+                  Collect +1 / 领取 +1
+                </button>
+              </div>
+            </section>
+
+            <!-- Online User：只展示在线账号的用户名、coins（可隐藏）、最近卡片等级 -->
+            <section class="card card-social">
+              <div class="section-header">
+                <h2>Online User / 在线用户</h2>
+                <label class="toggle-inline">
+                  <input type="checkbox" id="toggleHideCoins" />
+                  <span>Hide my coins / 隐藏我的硬币</span>
+                </label>
+              </div>
+              <p class="section-desc">
+                Live view of accounts currently on this page. Offline accounts are not shown.<br />
+                此处只展示正在浏览该页面的账号，离线账号不会出现。
+              </p>
+              <div id="onlineUsersList" class="online-users-list"></div>
+            </section>
+          </div>
+
+          <!-- Lottery：抽卡区 -->
+          <section class="card card-lottery">
+            <div class="section-header">
+              <h2>Lottery / 抽卡区</h2>
+              <span class="section-tag">3 coins per draw / 每次消耗 3 枚硬币</span>
+            </div>
+            <p class="section-desc">
+              Spend 3 coins to draw one card with different rarity levels.<br />
+              每次消耗 3 枚硬币，可以抽取一张不同稀有度的卡牌。
+            </p>
+
+            <div class="rarity-row">
+              <div class="rarity-item"><span class="badge badge-S">S</span><span>0.2%</span></div>
+              <div class="rarity-item"><span class="badge badge-A">A</span><span>1.8%</span></div>
+              <div class="rarity-item"><span class="badge badge-B">B</span><span>3%</span></div>
+              <div class="rarity-item"><span class="badge badge-C">C</span><span>3%</span></div>
+              <div class="rarity-item"><span class="badge badge-D">D</span><span>3%</span></div>
+              <div class="rarity-item"><span class="badge badge-E">E</span><span>22%</span></div>
+              <div class="rarity-item"><span class="badge badge-F">F</span><span>22%</span></div>
+              <div class="rarity-item"><span class="badge badge-none">No</span><span>45%</span></div>
+            </div>
+
+            <!-- 翻牌动画 -->
+            <div class="flip-zone">
+              <div class="flip" id="flipCard">
+                <div class="flip-inner">
+                  <div class="flip-face flip-front">
+                    <img id="cardFront" src="./assets/cards/back.jpg" alt="Card back" />
+                  </div>
+                  <div class="flip-face flip-back">
+                    <img id="cardBack" src="./assets/cards/NONE.jpg" alt="Result card" />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="actions actions-lower">
+              <button id="drawBtn" class="btn primary" disabled>
+                Enter Lottery / 参与抽卡
+                <span class="btn-sub">Spend 3 coins / 消耗 3 枚硬币</span>
+              </button>
+              <button id="resetBtn" class="btn danger">
+                Reset Account Data / 重置账号数据
+              </button>
+            </div>
+          </section>
+        </div>
+
+        <!-- 下排：Inventory + Activity -->
+        <div class="row row-bottom">
+          <section class="card card-inventory">
+            <div class="section-header">
+              <h2>Inventory / 卡牌背包</h2>
+              <span class="section-tag soft">
+                Collected cards / 已抽到的卡牌
+              </span>
+            </div>
+            <p class="section-desc">
+              All cards drawn by this account.<br />
+              当前账号已经抽到的所有卡牌。
+            </p>
+            <div id="inventory" class="grid inventory"></div>
+          </section>
+
+          <section class="card card-log">
+            <div class="section-header">
+              <h2>Activity / 活动记录</h2>
+              <span class="section-tag soft">
+                Local log / 本地日志
+              </span>
+            </div>
+            <p class="section-desc">
+              A short trace of what happened on this account.<br />
+              记录本账号在本页面发生过的小事件。
+            </p>
+            <div id="log" class="log"></div>
+          </section>
+        </div>
+      </main>
+
+      <footer class="app-footer">
+        <div>
+        @Jaylin Xu
+        </div>
+        <div>
+        2025
+        </div>
+      </footer>
+    </div>
+  </div>
+
+  <!-- socket.io 客户端脚本由服务器注入 -->
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="./app.js"></script>
+</body>
+</html>
